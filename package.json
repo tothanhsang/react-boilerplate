@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "lint-staged": "lint-staged --config lint-staged.js",
+    "lint-staged": "lint-staged --config lint-staged.cjs",
     "husky-install": "husky install",
     "prepare": "husky install",
     "prettier": "prettier src -check"

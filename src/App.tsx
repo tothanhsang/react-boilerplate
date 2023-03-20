@@ -1,5 +1,4 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Navigation from "./components/Navigation";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -8,13 +7,10 @@ import Users from "./components/Users";
 import Layout from "./components/Layout";
 import NoMatch from "./components/NoMatch";
 import User from "./components/User";
-import { connect } from "react-redux";
-import { startAction } from "./actions/startAction";
-import { stopAction } from "./actions/stopAction";
 
 export interface User {
-  id: String;
-  fullName: String;
+  id: string;
+  fullName: string;
 }
 
 function App() {
@@ -54,7 +50,7 @@ function App() {
 
   const [users, setUsers] = useState(usersArr);
 
-  const handleRemoveUser = (userId: String) => {
+  const handleRemoveUser = (userId: string) => {
     setUsers((state) => state.filter((user) => user.id !== userId));
     navigate("/users");
   };
@@ -70,7 +66,8 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="users" element={<Users users={users} />}>
             <Route
-              path=":userId" element={<User onRemoveUser={handleRemoveUser} />}
+              path=":userId"
+              element={<User onRemoveUser={handleRemoveUser} />}
             />
           </Route>
           <Route path="*" element={<NoMatch />} />
