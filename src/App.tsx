@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Navigation from "./components/Navigation";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -7,6 +7,10 @@ import Users from "./components/Users";
 import Layout from "./components/Layout";
 import NoMatch from "./components/NoMatch";
 import User from "./components/User";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getTodosSelector } from "./store/todo/selectors";
+import { fetchTodoRequest } from "./store/todo/actions";
 
 export interface User {
   id: string;
@@ -14,39 +18,20 @@ export interface User {
 }
 
 function App() {
-  // const [count, setCount] = useState(0)
-
-  // return (
-  //   <div className="App">
-  //     <div>
-  //       <a href="https://vitejs.dev" target="_blank">
-  //         <img src="/vite.svg" className="logo" alt="Vite logo" />
-  //       </a>
-  //       <a href="https://reactjs.org" target="_blank">
-  //         <img src={reactLogo} className="logo react" alt="React logo" />
-  //       </a>
-  //     </div>
-  //     <h1>Vite + React</h1>
-  //     <div className="card">
-  //       <button onClick={() => setCount((count) => count + 1)}>
-  //         count is {count}
-  //       </button>
-  //       <p>
-  //         Edit <code>src/App.tsx</code> and save to test HMR
-  //       </p>
-  //     </div>
-  //     <p className="read-the-docs">
-  //       Click on the Vite and React logos to learn more
-  //     </p>
-  //   </div>
-  // )
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const todos = useSelector(getTodosSelector);
+  // const pending = useSelector(getPendingSelector);
+  // const error = useSelector(getErrorSelector);
 
   const usersArr: User[] = [
     { id: "1", fullName: "Robin Wieruch" },
     { id: "2", fullName: "Sarah Finnley" },
   ];
+
+  useEffect(() => {
+    dispatch(fetchTodoRequest());
+  }, []);
 
   const [users, setUsers] = useState(usersArr);
 
@@ -58,6 +43,15 @@ function App() {
   return (
     <>
       <h1>React Router</h1>
+
+      {todos &&
+        todos.map((todo, index) => {
+          return (
+            <div style={{ color: "white" }} key={index}>
+              {todo.title}
+            </div>
+          );
+        })}
 
       <Navigation />
 
@@ -76,14 +70,5 @@ function App() {
     </>
   );
 }
-
-// const mapStateToProps = (state: any) => ({
-//   ...state,
-// });
-
-// const mapDispatchToProps = (dispatch: any) => ({
-//   startAction: () => dispatch(startAction),
-//   stopAction: () => dispatch(stopAction),
-// });
 
 export default App;
