@@ -1,0 +1,10 @@
+query GetTeamInfo {
+  myTeam {
+    getTeamInfo {
+      availableCredits
+      creditsUsed
+      nextRollOver
+      totalMembersCount
+    }
+  }
+}
